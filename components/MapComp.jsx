@@ -1,6 +1,10 @@
+
 "use client";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
+import { GoogleMap,
+   Marker, 
+   useLoadScript,
+   } from "@react-google-maps/api";
 
 
 const MapComponent = () => {
@@ -62,20 +66,18 @@ const MapComponent = () => {
   );
 
   useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          const { latitude, longitude } = pos.coords;
-          setCurrentPosition({ lat: latitude, lng: longitude });
-        },
-        (err) => {
-          console.log("Error getting location:", err);
-          
-        },
-        { enableHighAccuracy: true }
-      );
-    }
+    const fetchLocation = async () => {
+      try {
+        const res = await fetch("https://ipapi.co/json/");
+        const data = await res.json();
+        setCurrentPosition({ lat: data.latitude, lng: data.longitude });
+      } catch (err) {
+        console.error("Failed to get IP-based location:", err);
+      }
+    };
+    fetchLocation();
   }, []);
+
 
   if (!isLoaded) return <div>Loading map...</div>;
   if (!currentPosition) return <div>Getting your location...</div>;

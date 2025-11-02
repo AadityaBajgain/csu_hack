@@ -9,7 +9,7 @@ const Navbar = () => {
         <Link href="/" className="flex items-center">
           <div className="flex h-12 w-12 items-center justify-center rounded-2xl">
             <Image
-              src="/HERBLogo.png"
+              src="/favicon.ico"
               alt="Herb logo"
               width={36}
               height={36}

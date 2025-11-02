@@ -7,7 +7,7 @@ const features = [
     title: "Multimodal Symptom Analysis",
     badge: "AI Diagnosis",
     description:
-      "HealthAI uses Google Gemini to interpret both text and images of symptoms — including skin conditions, swelling, wounds, and rashes — providing accurate, ranked condition predictions.",
+      "HERB uses Google Gemini to interpret both text and images of symptoms — including skin conditions, swelling, wounds, and rashes — providing accurate, ranked condition predictions.",
   },
   {
     title: "Emergency Detection",
@@ -25,7 +25,7 @@ const features = [
     title: "Actionable Guidance",
     badge: "Personal Health Plan",
     description:
-      "Beyond diagnosis, HealthAI explains next steps clearly: what to monitor, when to see a doctor, and simple prevention or lifestyle actions to take immediately.",
+      "Beyond diagnosis, HERB explains next steps clearly: what to monitor, when to see a doctor, and simple prevention or lifestyle actions to take immediately.",
   },
 ];
 
@@ -33,7 +33,7 @@ const supportSteps = [
   {
     title: "Describe or upload your symptoms",
     detail:
-      "Simply tell HealthAI how you feel, or upload an image of the affected area — whether it's a rash, wound, or swelling.",
+      "Simply tell HERB how you feel, or upload an image of the affected area — whether it's a rash, wound, or swelling.",
   },
   {
     title: "Get instant analysis and insights",
@@ -43,7 +43,7 @@ const supportSteps = [
   {
     title: "Receive guidance and find care",
     detail:
-      "HealthAI provides clear next steps — including self-care advice, red-flag alerts, and a list of nearby hospitals that specialize in your condition.",
+      "HERB provides clear next steps — including self-care advice, red-flag alerts, and a list of nearby hospitals that specialize in your condition.",
   },
 ];
 
@@ -63,7 +63,7 @@ const Page = () => {
               Understand your symptoms with clarity
             </h2>
             <p className="text-lg text-muted">
-              HealthAI empowers you to make informed health decisions by
+              HERB empowers you to make informed health decisions by
               combining visual and text-based symptom analysis with AI-powered
               insights.
             </p>
@@ -95,13 +95,13 @@ const Page = () => {
         <section className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="space-y-6">
             <span className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-slate-200">
-              How HealthAI supports you
+              How HERB supports you
             </span>
             <h2 className="text-3xl font-semibold text-white md:text-4xl">
               AI guidance, human-level reassurance
             </h2>
             <p className="text-lg text-muted">
-              HealthAI blends cutting-edge AI analysis with trusted medical data
+              HERB blends cutting-edge AI analysis with trusted medical data
               to help you understand what’s happening — and what to do next.
             </p>
 
@@ -118,7 +118,6 @@ const Page = () => {
             </ul>
           </div>
 
-          {/* VISUAL ANALYSIS SECTION */}
           <div className="glass-card relative overflow-hidden rounded-3xl p-8">
             <div
               aria-hidden="true"
@@ -134,7 +133,7 @@ const Page = () => {
                   See what your symptoms mean
                 </h3>
                 <p className="mt-4 text-sm text-muted">
-                  HealthAI compares your uploaded image to a library of verified
+                  HERB compares your uploaded image to a library of verified
                   medical references, helping you understand what your skin,
                   wound, or swelling might indicate.
                 </p>
@@ -162,7 +161,7 @@ const Page = () => {
                 </p>
                 <p className="mt-3 text-sm text-muted">
                   Built with verified medical data and expert-reviewed sources,
-                  HealthAI empowers users to make informed decisions before
+                  HERB empowers users to make informed decisions before
                   seeking professional help.
                 </p>
               </div>
@@ -180,7 +179,7 @@ const Page = () => {
               Ready to understand your symptoms instantly?
             </h2>
             <p className="text-lg text-muted">
-              Upload an image or describe how you feel — HealthAI will analyze
+              Upload an image or describe how you feel — HERB will analyze
               it, suggest possible conditions, and show specialized hospitals
               near you.
             </p>

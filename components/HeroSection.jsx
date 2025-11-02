@@ -12,7 +12,7 @@ const HeroSection = () => {
         <div className="space-y-6">
           <h1 className="text-4xl font-semibold leading-tight text-white md:text-5xl">
             Understand your symptoms with{" "}
-            <span className="text-emerald-400">HealthAI</span>
+            <span className="text-emerald-400">HERB</span>
           </h1>
           <p className="max-w-xl text-lg text-muted">
             Your intelligent health assistant that analyzes both text and image
@@ -45,9 +45,9 @@ const HeroSection = () => {
               AI Visual Analysis
             </p>
             <p className="mt-4 text-sm text-muted">
-              “User uploaded a photo of a skin rash.” HealthAI compares it to
-              medical references and suggests: <b>eczema (78%)</b>,{" "}
-              <b>allergic reaction (15%)</b>, <b>psoriasis (7%)</b>.
+              “User uploaded a photo of a skin rash.” HERB compares it to
+              medical references and suggests: <b>eczema (high)</b>,{" "}
+              <b>allergic reaction (medium)</b>, <b>psoriasis (low)</b>.
             </p>
             <Link
               href="/diagnosis"

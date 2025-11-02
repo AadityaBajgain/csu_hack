@@ -82,9 +82,6 @@ const MapPage = () => {
             <Link href="/" className="btn-secondary">
               Back to dashboard
             </Link>
-            <Link href="mailto:care@herb.health" className="btn-primary">
-              Talk with Herb care
-            </Link>
           </div>
         </div>
       </div>

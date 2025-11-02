@@ -49,7 +49,7 @@ const HeroSection = () => {
               and an on-demand nurse consult if symptoms persist.
             </p>
             <div className="mt-6 flex items-center justify-between rounded-xl bg-emerald-500/10 px-4 py-3 text-xs font-medium text-emerald-200 hover:bg-emerald-500 cursor-pointer">
-              <button>Get Yourself Diagnosed</button>
+              <button href="DiagnosisForm.jsx">Get Yourself Diagnosed</button>
               <span></span>
             </div>
           </div>

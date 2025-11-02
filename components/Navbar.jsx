@@ -22,7 +22,6 @@ const Navbar = () => {
           </div>
         </Link>
 
-
         <Link href="/map" className="btn-primary">
           Find nearby care
         </Link>

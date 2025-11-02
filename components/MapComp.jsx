@@ -7,8 +7,14 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { GoogleMap, InfoWindow, Marker, useLoadScript } from "@react-google-maps/api";
-
+import {
+  GoogleMap,
+  InfoWindow,
+  Marker,
+  useLoadScript,
+} from "@react-google-maps/api";
+import { useDiagnosisResponse } from "@/lib/diagnosisResponse";
+import { deriveSpecialtySearch } from "@/lib/specialityHospitals";
 
 const statusLabel = {
   idle: "Ready",
@@ -19,20 +25,68 @@ const statusLabel = {
 };
 
 const DEFAULT_RADIUS_METERS = 7000;
+const DEFAULT_MAP_SETTINGS = {
+  keyword: "",
+  placeType: "hospital",
+  title: "Nearby care",
+  highlight: "Tap a marker or list item to see contact details.",
+};
 
 const MapComponent = ({
-  keyword = "",
-  placeType = "hospital",
+  keyword,
+  placeType,
   radius = DEFAULT_RADIUS_METERS,
-  title = "Nearby care",
+  title,
   highlight,
   limit = 6,
+  useDiagnosisFallback = true,
 }) => {
   const { isLoaded } = useLoadScript({
     id: "google-map-script",
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
     libraries: ["places"],
   });
+
+  const latestDiagnosis = useDiagnosisResponse();
+  const analysis = latestDiagnosis?.analysis;
+  const conditions = Array.isArray(analysis?.conditions)
+    ? analysis.conditions
+    : [];
+  const specialtyHint = analysis?.whichSpecialityHospitalToGo ?? "";
+
+  const derivedSpecialty = useMemo(() => {
+    if (!useDiagnosisFallback) return null;
+    if (!conditions.length && !specialtyHint) return null;
+    return deriveSpecialtySearch(conditions, specialtyHint);
+  }, [conditions, specialtyHint, useDiagnosisFallback]);
+
+  const mergedSettings = useMemo(() => {
+    if (keyword || placeType || title || highlight) {
+      return {
+        keyword: keyword ?? DEFAULT_MAP_SETTINGS.keyword,
+        placeType: placeType ?? DEFAULT_MAP_SETTINGS.placeType,
+        title: title ?? DEFAULT_MAP_SETTINGS.title,
+        highlight: highlight ?? DEFAULT_MAP_SETTINGS.highlight,
+      };
+    }
+
+    if (derivedSpecialty) {
+      return {
+        keyword: derivedSpecialty.keyword ?? DEFAULT_MAP_SETTINGS.keyword,
+        placeType: derivedSpecialty.placeType ?? DEFAULT_MAP_SETTINGS.placeType,
+        title: derivedSpecialty.title ?? DEFAULT_MAP_SETTINGS.title,
+        highlight:
+          derivedSpecialty.highlight ?? DEFAULT_MAP_SETTINGS.highlight,
+      };
+    }
+
+    return DEFAULT_MAP_SETTINGS;
+  }, [derivedSpecialty, highlight, keyword, placeType, title]);
+
+  const searchKeyword = mergedSettings.keyword;
+  const searchPlaceType = mergedSettings.placeType;
+  const panelTitle = mergedSettings.title;
+  const panelHighlight = mergedSettings.highlight;
 
   const mapRef = useRef(null);
   const [currentPosition, setCurrentPosition] = useState(null);
@@ -71,8 +125,8 @@ const MapComponent = ({
         radius,
       };
 
-      if (keyword) request.keyword = keyword;
-      if (placeType) request.type = placeType;
+      if (searchKeyword) request.keyword = searchKeyword;
+      if (searchPlaceType) request.type = searchPlaceType;
 
       service.nearbySearch(request, (results, serviceStatus) => {
         if (currentFetchId !== fetchIdRef.current) {
@@ -181,7 +235,7 @@ const MapComponent = ({
         }
       });
     },
-    [keyword, limit, placeType, radius]
+    [limit, radius, searchKeyword, searchPlaceType]
   );
 
   const onLoad = useCallback(
@@ -304,10 +358,10 @@ const MapComponent = ({
       <div className="glass-card rounded-3xl p-6">
         <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h3 className="text-lg font-semibold text-white">{title}</h3>
-            {highlight && (
+            <h3 className="text-lg font-semibold text-white">{panelTitle}</h3>
+            {panelHighlight && (
               <p className="text-xs uppercase tracking-[0.3em] text-muted">
-                {highlight}
+                {panelHighlight}
               </p>
             )}
           </div>

@@ -3,7 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { setLatestDiagnosis } from "@/lib/diagnosisStore";
+import {
+  clearDiagnosisResponse,
+  setDiagnosisResponse,
+} from "@/lib/diagnosisResponse";
 import { deriveSpecialtySearch } from "@/lib/specialityHospitals";
 
 const formatSize = (size) => {
@@ -94,7 +97,7 @@ const DiagnosisForm = () => {
       try {
         setIsSubmitting(true);
         setResult(null);
-        setLatestDiagnosis(null);
+        clearDiagnosisResponse();
 
         const images = await Promise.all(
           files.map(async (file) => ({
@@ -123,7 +126,7 @@ const DiagnosisForm = () => {
 
         const payload = await response.json();
         setResult(payload);
-        setLatestDiagnosis(payload);
+        setDiagnosisResponse(payload);
       } catch (submitError) {
         console.error(submitError);
         setError(

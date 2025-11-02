@@ -26,9 +26,9 @@ const HeroSection = () => {
           Wellness reinvented
         </span>
         <div className="space-y-6">
-          <h1 className="text-4xl font-semibold leading-tight text-white md:text-5xl">
+          <h1 className="text-4xl font-semibold leading-tight text-green-400 md:text-5xl">
             Navigate your health with{" "}
-            <span className="text-emerald-400">Herb</span>
+            <span className="text-green-300">Herb</span>
           </h1>
           <p className="max-w-xl text-lg text-muted">
             Herb monitors how you feel, surfaces proactive care insights, and

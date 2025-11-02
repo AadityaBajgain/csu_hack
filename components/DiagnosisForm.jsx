@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { setLatestDiagnosis } from "@/lib/diagnosisStore";
 import { deriveSpecialtySearch } from "@/lib/specialityHospitals";
 
 const formatSize = (size) => {
@@ -32,7 +33,8 @@ const DiagnosisForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [result, setResult] = useState(null);
-
+ 
+  
   // Generate image previews
   useEffect(() => {
     const nextPreviews = files.map((file) => ({
@@ -92,6 +94,7 @@ const DiagnosisForm = () => {
       try {
         setIsSubmitting(true);
         setResult(null);
+        setLatestDiagnosis(null);
 
         const images = await Promise.all(
           files.map(async (file) => ({
@@ -114,12 +117,13 @@ const DiagnosisForm = () => {
           const payload = await response.json().catch(() => null);
           throw new Error(
             payload?.error ??
-              "We couldn’t reach HealthAI right now. Please try again."
+              "We couldn’t reach HERB right now. Please try again."
           );
         }
 
         const payload = await response.json();
         setResult(payload);
+        setLatestDiagnosis(payload);
       } catch (submitError) {
         console.error(submitError);
         setError(
@@ -140,10 +144,15 @@ const DiagnosisForm = () => {
     ? analysis.conditions
     : [];
   const specialtySearch = useMemo(
-    () => deriveSpecialtySearch(conditions),
-    [conditions]
+    () =>
+      deriveSpecialtySearch(
+        conditions,
+        analysis?.whichSpecialityHospitalToGo ?? ""
+      ),
+    [conditions, analysis?.whichSpecialityHospitalToGo]
   );
   const specialtySearchQuery = useMemo(() => {
+    if (!analysis) return "";
     if (!specialtySearch) return "";
     const params = new URLSearchParams();
     if (specialtySearch.keyword) params.set("keyword", specialtySearch.keyword);
@@ -152,8 +161,14 @@ const DiagnosisForm = () => {
     if (specialtySearch.title) params.set("title", specialtySearch.title);
     if (specialtySearch.highlight)
       params.set("highlight", specialtySearch.highlight);
+    if (analysis.whichSpecialityHospitalToGo) {
+      params.set(
+        "whichSpecialityHospitalToGo",
+        analysis.whichSpecialityHospitalToGo
+      );
+    }
     return params.toString();
-  }, [specialtySearch]);
+  }, [analysis, specialtySearch]);
   const specialtyMapHref = specialtySearchQuery
     ? `/map?${specialtySearchQuery}`
     : "/map";
@@ -164,7 +179,7 @@ const DiagnosisForm = () => {
         onSubmit={handleSubmit}
         className="glass-card space-y-8 rounded-3xl p-8"
       >
-      
+        {/* STEP 1 */}
         <div className="space-y-3">
           <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.3em] text-emerald-200">
             <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-200">
@@ -177,7 +192,7 @@ const DiagnosisForm = () => {
           </label>
           <p className="text-sm text-muted">
             Mention when it started, pain level, visible changes, or any recent
-            triggers. HealthAI uses this along with image analysis to identify
+            triggers. HERB uses this along with image analysis to identify
             possible causes.
           </p>
           <textarea
@@ -189,7 +204,7 @@ const DiagnosisForm = () => {
           />
         </div>
 
-      
+        {/* STEP 2 */}
         <div className="space-y-4">
           <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.3em] text-sky-200">
             <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-sky-500/20 text-sky-200">
@@ -269,10 +284,10 @@ const DiagnosisForm = () => {
             disabled={isSubmitting}
             className="btn-primary w-full justify-center px-8 py-4 text-base"
           >
-            {isSubmitting ? "Analyzing..." : "Analyze with HealthAI"}
+            {isSubmitting ? "Analyzing..." : "Analyze with HERB"}
           </button>
           <p className="text-xs text-muted">
-            HealthAI is an AI health assistant, not a doctor. If you’re in a
+            HERB is an AI health assistant, not a doctor. If you’re in a
             medical emergency, call your local emergency number immediately.
           </p>
         </div>
@@ -282,7 +297,7 @@ const DiagnosisForm = () => {
         <>
           <section className="glass-card space-y-6 rounded-3xl border border-emerald-500/40 bg-emerald-500/5 p-8 text-white">
             <div>
-              <h2 className="text-2xl font-semibold">HealthAI findings</h2>
+              <h2 className="text-2xl font-semibold">HERB findings</h2>
               <p className="mt-2 text-sm text-emerald-100/80">
                 These insights come directly from the most recent analysis.
               </p>
@@ -365,7 +380,7 @@ const DiagnosisForm = () => {
                 </h3>
                 <p className="mt-1 text-sm text-muted">
                   {specialtySearch.highlight ||
-                    "HealthAI matched your symptoms to nearby specialists."}
+                    "HERB matched your symptoms to nearby specialists who can help."}
                 </p>
               </div>
               <Link

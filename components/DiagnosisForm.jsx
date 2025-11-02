@@ -30,7 +30,8 @@ const DiagnosisForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [result, setResult] = useState(null);
-
+  const [MapQuery,setMapQuery] = useState(null);
+  
   // Generate image previews
   useEffect(() => {
     const nextPreviews = files.map((file) => ({
@@ -91,7 +92,6 @@ const DiagnosisForm = () => {
         setIsSubmitting(true);
         setResult(null);
 
-        
         const images = await Promise.all(
           files.map(async (file) => ({
             mimeType: file.type || "image/jpeg",
@@ -239,7 +239,6 @@ const DiagnosisForm = () => {
           )}
         </div>
 
-        
         <div className="space-y-3">
           {error && (
             <div className="rounded-3xl border border-rose-500/40 bg-rose-500/10 p-4 text-sm text-rose-100">

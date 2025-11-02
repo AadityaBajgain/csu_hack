@@ -73,7 +73,8 @@ Important:
     });
     // console.log(response);
     // Parse model output
-    const text = response.text;
+    const text = response.text.slice(7,-3);
+   
     console.log(text);
     if (!text) {
       console.log(response.text);
@@ -81,12 +82,11 @@ Important:
     }
 
     let parsed;
-    // console.log(text.slice())
+    // console.log(text.slice(7,-3))
     try {
       parsed = JSON.parse(text);
 
-      // ✅ Ensure consistent shape:
-      // if Gemini returned the inner object directly, wrap it
+
       if (!parsed.analysis) {
         parsed = { analysis: parsed };
       }

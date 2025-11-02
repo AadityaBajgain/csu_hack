@@ -9,6 +9,7 @@ import React, {
 } from "react";
 import { GoogleMap, InfoWindow, Marker, useLoadScript } from "@react-google-maps/api";
 
+
 const statusLabel = {
   idle: "Ready",
   loading: "Searching...",

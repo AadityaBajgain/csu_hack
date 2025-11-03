@@ -126,10 +126,3 @@ npm run lint
 
 ---
 
-## 📄 License
-
-Add your preferred license here (MIT, Apache, etc.), or note that the project is currently proprietary.
-
----
-
-Happy hacking with HERB! Feel free to reach out if you have questions or ideas to improve the assistant.

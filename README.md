@@ -109,9 +109,11 @@ npm run lint
 
 ## 📷 Screenshots (optional)
 
-| Diagnosis Form | Map View |
-|----------------|----------|
-| _Add screenshot_ | _Add screenshot_ |
+1. Diagnosis Form
+![Diagnosis Form](<Screenshot 2025-11-02 at 17.08.22.png>)
+
+2. Map View
+![Map Page](<Screenshot 2025-11-02 at 17.08.58.png>)
 
 ---
 

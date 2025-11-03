@@ -26,6 +26,7 @@ export default function RootLayout({ children }) {
       >
         <Navbar/>
         {children}
+        <Analytics/>
       </body>
     </html>
   );

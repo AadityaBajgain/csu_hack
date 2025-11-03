@@ -99,7 +99,6 @@ npm run lint
 ---
 
 ## 🏛️ System Design
-
 ```
 [User Browser]
       │

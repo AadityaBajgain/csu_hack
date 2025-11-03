@@ -99,6 +99,7 @@ npm run lint
 ---
 
 ## 🏛️ System Design
+
 ```
 [User Browser]
       │
@@ -122,7 +123,6 @@ npm run lint
 ---
 
 ## 🔁 Workflow Architecture
-
 1. **Input stage** – Users type symptoms, upload optional imagery, and submit via the form. Client validation ensures only supported formats reach the API.
 2. **Inference stage** – `/api/gemini` composes a prompt from the user data, calls Gemini (`gemini-2.0-flash`), and enforces the expected JSON schema before responding.
 3. **Insight stage** – The frontend parses the response into condition cards, triage level, and recommended next steps, persisting the object in the shared store.

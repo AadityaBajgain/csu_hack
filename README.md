@@ -23,9 +23,7 @@ Patients describe their symptoms, optionally add photos, and HERB analyzes the i
 | UI | React 19 with utility-first styling |
 | AI | [`@google/genai`](https://www.npmjs.com/package/@google/genai`) – Gemini multimodal model |
 | Maps | [`@react-google-maps/api`](https://react-google-maps-api-docs.netlify.app/) for Places search, markers, and info windows |
-| State sharing | Lightweight diagnosis store via `useSyncExternalStore` |
-| Linting | ESLint 9 with `eslint-config-next` |
-| Styling | Custom glassmorphism classes defined in `app/globals.css` |
+
 
 ---
 
